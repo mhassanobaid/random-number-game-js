@@ -5,12 +5,17 @@ const message = document.querySelector("#message");
 const attemptsDisplay = document.querySelector("#attempts");
 
 const restartBtn = document.querySelector("#restartBtn");
+const guessList = document.querySelector("#guessList");
 
 let secretNumber = Math.floor(Math.random() * 100) + 1;
 
 let attemptsRemaining = 10;
 
 let gameOver = false;
+
+const guessHistory = document.querySelector('.guess-history');
+
+guessHistory.style.display = 'none';
 
 guessForm.addEventListener("submit", function(event) {
 
@@ -34,6 +39,15 @@ guessForm.addEventListener("submit", function(event) {
 
   // Decrease remaining attempts
   attemptsRemaining--;
+
+  guessHistory.style.display = '';
+
+    // Display user's previous guess in UI
+  const listItem = document.createElement("li");
+
+  listItem.textContent = guess;
+
+  guessList.appendChild(listItem);
 
   // Compare user's guess with secret number
   if (guess === secretNumber) {
@@ -91,6 +105,10 @@ restartBtn.addEventListener("click", function() {
 
   // Reset messages
   message.textContent = "Make your first guess!";
+
+  guessHistory.style.display = 'none';
+  // Clear previous guesses
+  guessList.innerHTML = "";
 
   attemptsDisplay.textContent = "Attempts remaining: 10";
 
